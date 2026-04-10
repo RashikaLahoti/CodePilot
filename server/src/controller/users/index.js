@@ -51,3 +51,18 @@ export const loginUserController = async (req, res) => {
     return internalServerError(res, { message: error.message });
   }
 };
+
+export const refreshToken = (req, res) => {
+  const { refreshToken } = req.cookies;
+
+  if (!refreshToken) {
+    return customError(res, {}, 401, "Token is required");
+  }
+
+  try {
+    const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    sendAccessToken(res, payload);
+  } catch (error) {
+    return customError(res, {}, 403, "Invalid refresh token");
+  }
+};

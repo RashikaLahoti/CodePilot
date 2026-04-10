@@ -4,7 +4,7 @@ import { success, created } from "./response.util.js";
 export const sendTokens = (user, statusCode, res) => {
   const accessToken = jwt.sign(
     { userId: user._id, name: user.name },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET_KEY,
     { expiresIn: "15m" },
   );
   const refreshToken = jwt.sign(
@@ -32,7 +32,7 @@ export const sendTokens = (user, statusCode, res) => {
 export const sendAccessToken = (res, user) => {
   const accessToken = jwt.sign(
     { userId: user.userId, name: user.name },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET_KEY,
     { expiresIn: "15m" },
   );
 

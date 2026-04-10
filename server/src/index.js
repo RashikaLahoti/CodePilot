@@ -3,6 +3,7 @@ import Router from "./routes/index.js";
 import logger from "morgan";
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
+import errorMiddleware from "./utils/error-handler.js";
 
 connectDB();
 
@@ -15,5 +16,7 @@ app.use(express.json());
 //handling routes
 app.use("/api/v1", Router);
 
+//error handling
+app.use(errorMiddleware)
 export default app;
 
