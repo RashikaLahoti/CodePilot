@@ -1,15 +1,27 @@
-import callHuggingFace from "../../utils/ai.utils.js";
+import callHuggingFace, { callGemini } from "../../utils/ai.utils.js";
 import { internalServerError, success } from "../../utils/response.util.js";
+import envVariables from "../../config/config.env.js";
 
 const generateController = async (req, res) => {
     try {
         const {chat} = req.params;
-        const response = await callHuggingFace(chat, process.env.HUGGING_FACE_KEY);
-        return success(res, {response});
+        const response = await callHuggingFace(chat, envVariables.huggingfacekey);
+        return success(res, response);
     } catch (error) {
         console.log(error);
         return internalServerError(res, {message: error.message});
     }
 }
 
-export default generateController;
+const geminiController = async (req, res) => {
+    try {
+        const {chat} = req.params;
+        const response = await callGemini(chat);
+        return success(res, response);
+    } catch (error) {
+        console.log(error);
+        return internalServerError(res, {message: error.message});
+    }
+}
+
+export default {generateController, geminiController};

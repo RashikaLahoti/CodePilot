@@ -1,15 +1,16 @@
 import jwt from "jsonwebtoken";
 import { success, created } from "./response.util.js";
+import envVariables from "../config/config.env.js";
 
 export const sendTokens = (user, statusCode, res) => {
   const accessToken = jwt.sign(
     { userId: user._id, name: user.name },
-    process.env.JWT_SECRET_KEY,
+    envVariables.jwtsecretkey,
     { expiresIn: "15m" },
   );
   const refreshToken = jwt.sign(
     { userId: user._id, name: user.name },
-    process.env.REFRESH_TOKEN_SECRET,
+    envVariables.refreshtokensecret,
     { expiresIn: "7d" },
   );
 
@@ -32,7 +33,7 @@ export const sendTokens = (user, statusCode, res) => {
 export const sendAccessToken = (res, user) => {
   const accessToken = jwt.sign(
     { userId: user.userId, name: user.name },
-    process.env.JWT_SECRET_KEY,
+    envVariables.jwtsecretkey,
     { expiresIn: "15m" },
   );
 

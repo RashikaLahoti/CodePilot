@@ -1,9 +1,11 @@
 import { Router } from "express";
-import generateController from "../../controller/ai/index.js";
+import aiController from "../../controller/ai/index.js";
 
 const router = Router();
 
-router.get("/generate/:chat", generateController)
+router.get("/generate/huggingface/:chat", aiController.generateController);
+router.get("/generate/gemini/:chat", aiController.geminiController);
+
 
 
 

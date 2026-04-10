@@ -7,6 +7,7 @@ import User from "../../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendTokens } from "../../utils/auth.util.js";
+import envVariables from "../../config/config.env.js";
 
 export const registerUserController = async (req, res) => {
   try {
@@ -60,7 +61,7 @@ export const refreshToken = (req, res) => {
   }
 
   try {
-    const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const payload = jwt.verify(refreshToken, envVariables.refreshtokensecret);
     sendAccessToken(res, payload);
   } catch (error) {
     return customError(res, {}, 403, "Invalid refresh token");

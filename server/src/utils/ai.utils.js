@@ -1,4 +1,6 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 const callHuggingFace = async (prompt, key)=>{
     try {
@@ -20,6 +22,7 @@ const callHuggingFace = async (prompt, key)=>{
         }
       }
     )
+    console.log(response.data.choices?.[0]?.message?.content)
     return response.data.choices?.[0]?.message?.content || "No response";
     } catch (err) {
         if (err.response) {
@@ -34,3 +37,19 @@ const callHuggingFace = async (prompt, key)=>{
 }
 
 export default callHuggingFace;
+
+import { GoogleGenAI } from "@google/genai";
+import envVariables from "../config/config.env.js";
+ 
+const ai = new GoogleGenAI({
+  apiKey: envVariables.geminikey,
+});
+
+export async function callGemini(prompt) {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: prompt,
+  });
+  console.log("Gemini Response: ", response.text);
+  return response;
+}
