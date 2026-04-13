@@ -5,12 +5,14 @@ import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./utils/error-handler.js";
 import { notFound } from "./utils/response.util.js";
+import cors from "cors";
 
 connectDB();
 
 const app = express();
 
 app.use(logger("tiny"));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 

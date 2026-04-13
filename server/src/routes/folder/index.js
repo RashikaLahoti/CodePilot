@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { createFolder } from "../../controller/folder/index.js";
+import { createFolder, deleteFolder, getFolder, renameFolder } from "../../controller/folder/index.js";
 
 const router = Router();
 
-router.get("/create", createFolder)
+router.post("/create", createFolder)
+router.get("/get", getFolder)
+router.post("/rename", renameFolder)
+router.post("/delete", deleteFolder)
 
 export default router;

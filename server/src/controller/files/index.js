@@ -4,11 +4,11 @@ import { customError, success } from "../../utils/response.util.js";
 
 export const createFile = (req, res) => {
     const currentDir = path.resolve() + "/assets";
-    // let {fileName} = req.body;
-    // if(!fileName) {
-    //     return badRequest(res, {message: "File name is required"});
-    // }
-    fs.writeFile(`${currentDir}/fn`, "", (err) => {
+    let {fileName} = req.body;
+    if(!fileName) {
+        return badRequest(res, {message: "File name is required"});
+    }
+    fs.writeFile(`${currentDir}/${fileName}`, "", (err) => {
         if(err) {
             return customError(res, {message: "File not created"});
         }

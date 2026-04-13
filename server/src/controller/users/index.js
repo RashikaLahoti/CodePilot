@@ -1,12 +1,13 @@
 import {
   badRequest,
+  customError,
   internalServerError,
   success,
 } from "../../utils/response.util.js";
 import User from "../../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { sendTokens } from "../../utils/auth.util.js";
+import { sendAccessToken, sendTokens } from "../../utils/auth.util.js";
 import envVariables from "../../config/config.env.js";
 
 export const registerUserController = async (req, res) => {
@@ -53,7 +54,7 @@ export const loginUserController = async (req, res) => {
   }
 };
 
-export const refreshToken = (req, res) => {
+export const refreshTokenController = (req, res) => {
   const { refreshToken } = req.cookies;
 
   if (!refreshToken) {
@@ -66,4 +67,9 @@ export const refreshToken = (req, res) => {
   } catch (error) {
     return customError(res, {}, 403, "Invalid refresh token");
   }
+};
+
+export const meController = async (req, res) => {
+  const user = await User.findById(req.user.userId).select("-password");
+  return success(res, { user });
 };

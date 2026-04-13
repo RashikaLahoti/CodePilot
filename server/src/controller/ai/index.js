@@ -5,6 +5,7 @@ import envVariables from "../../config/config.env.js";
 const generateController = async (req, res) => {
     try {
         const {chat} = req.params;
+        
         const response = await callHuggingFace(chat, envVariables.huggingfacekey);
         return success(res, response);
     } catch (error) {
