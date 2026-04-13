@@ -1,17 +1,5 @@
 import { axiosInstance } from "../../config/axios.config";
-
-const asyncHandler = (fn) => {
-    return async (...args) => {
-        try {
-            return await fn(...args);
-        } catch (error) {
-            console.log(error);
-            throw error; // important for further handling
-        }
-    };
-};
-const str = 'hello hdaksfksn fds fklnds fj sd *** folrt:{dsfds:SDFDSFDS:dsfdsf}}'
-
+import { asyncHandler } from "../../utils/AsyncHandler";
 
 export const generateNewAccessToken = asyncHandler(async () => {
         const response = await axiosInstance.post('/user/refresh-token');

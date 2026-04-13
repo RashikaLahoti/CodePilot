@@ -49,6 +49,7 @@ export const loginUserController = async (req, res) => {
     }
 
     sendTokens(user, 200, res)
+    return success(res, { message: "Login successful" });
   } catch (error) {
     return internalServerError(res, { message: error.message });
   }
